@@ -16,7 +16,7 @@
  *=====================================================================================
  */
 
-
+// Note: modifed to sendDataLoop.c to run infinitely
 
 #include <arpa/inet.h>
 #include <linux/if_packet.h>
@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 
 	if (argc == 1)
 	{
-		printf("Usage:   %s <interface> <dstMacAddr> <numPacketsToSend>\n", argv[0]);
-		printf("Example: %s wlan0 00:7F:5D:3E:4A 100\n", argv[0]);
+		printf("Usage:   %s <interface> <dstMacAddr> <interval>\n", argv[0]);
+		printf("Example: %s wlan0 00:7F:5D:3E:4A 50\n", argv[0]);
 		exit(0);
 	}
 
@@ -165,13 +165,13 @@ int main(int argc, char *argv[])
 	socket_address.sll_addr[5] = DstAddr[5];
 
 	// Send packet
-	for (; Cnt > 0; Cnt--)
+	while (1)
 	{
 		/* You set the time interval between two transmitting packets 
 		 * for example, here we set it to 50 microseconds
 		 * set to 0 if you don't need it
 		 */
-		if (usleep(50) == -1)
+		if (usleep(Cnt) == -1)
 		{
 			printf("Sleep failed\n");
 		}

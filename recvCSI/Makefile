@@ -15,4 +15,3 @@ recvCSI.o: main.c csi_fun.h
 
 clean:
 	rm -f *.o recvCSI
-
